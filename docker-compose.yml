@@ -1,41 +1,4 @@
 services:
-  orders:
-    build:
-      context: .
-      dockerfile: ./apps/orders/Dockerfile
-      target: development
-    command: npm run start:dev orders
-    env_file:
-      - ./apps/orders/.env
-    depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
-      - billing
-      - auth
-      - rabbitmq
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - '3000:3000'
-  billing:
-    build:
-      context: .
-      dockerfile: ./apps/billing/Dockerfile
-      target: development
-    command: npm run start:dev billing
-    env_file:
-      - ./apps/billing/.env
-    depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
-      - rabbitmq
-      - auth
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
   auth:
     build:
       context: .
@@ -54,6 +17,92 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
+
+  users:
+    build:
+      context: .
+      dockerfile: ./apps/users/Dockerfile
+      target: development
+
+    command: npm run start:dev users
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    ports:
+      - '3002:3002'
+
+  reactions:
+    build:
+      context: .
+      dockerfile: ./apps/reactions/Dockerfile
+      target: development
+    command: npm run start:dev reactions
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    ports:
+      - '3003:3003'
+
+  posts:
+    build:
+      context: .
+      dockerfile: ./apps/posts/Dockerfile
+      target: development
+    command: npm run start:dev posts
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    ports:
+        - '3004:3004'
+
+  files:
+    build:
+      context: .
+      dockerfile: ./apps/files/Dockerfile
+      target: development
+    command: npm run start:dev files
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    ports:
+      - '3005:3005'
+
+  weather:
+    build:
+      context: .
+      dockerfile: ./apps/weather/Dockerfile
+      target: development
+    command: npm run start:dev weather
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    ports:
+      - '3006:3006'
+
+  reels:
+    build:
+      context: .
+      dockerfile: ./apps/reels/Dockerfile
+      target: development
+    command: npm run start:dev reels
+    depends_on:
+      - mongodb-primary
+      - mongodb-secondary
+      - mongodb-arbiter
+      - rabbitmq
+    ports:
+      - '3000:3000'
+
   rabbitmq:
     image: rabbitmq
     ports:
@@ -61,7 +110,7 @@ services:
   mongodb-primary:
     image: docker.io/bitnami/mongodb:5.0
     environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
+      - MONGODB_ADVERTISED_HOSTNAME=localhost
       - MONGODB_REPLICA_SET_MODE=primary
       - MONGODB_ROOT_PASSWORD=password123
       - MONGODB_REPLICA_SET_KEY=replicasetkey123
@@ -75,7 +124,7 @@ services:
     depends_on:
       - mongodb-primary
     environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
+      - MONGODB_ADVERTISED_HOSTNAME=localhost
       - MONGODB_REPLICA_SET_MODE=secondary
       - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
       - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123

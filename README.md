@@ -41,8 +41,16 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
+# development single microservice
+$ nest start <microservice-name> --watch
+```
+
+
+## Docker
+
+```bash
+# docker compose 
+$ npm run docker:compose
 ```
 
 ## Test

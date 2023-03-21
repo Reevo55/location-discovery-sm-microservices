@@ -1,11 +1,11 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/orders/src",
+  "sourceRoot": "apps/reels/src",
   "monorepo": true,
-  "root": "apps/orders",
+  "root": "apps/reels",
   "compilerOptions": {
     "webpack": true,
-    "tsConfigPath": "apps/orders/tsconfig.app.json"
+    "tsConfigPath": "apps/reels/tsconfig.app.json"
   },
   "projects": {
     "auth": {
@@ -24,6 +24,60 @@
       "sourceRoot": "libs/common/src",
       "compilerOptions": {
         "tsConfigPath": "libs/common/tsconfig.lib.json"
+      }
+    },
+    "reels": {
+      "type": "application",
+      "root": "apps/reels",
+      "entryFile": "main",
+      "sourceRoot": "apps/reels/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/reels/tsconfig.app.json"
+      }
+    },
+    "users": {
+      "type": "application",
+      "root": "apps/users",
+      "entryFile": "main",
+      "sourceRoot": "apps/users/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/users/tsconfig.app.json"
+      }
+    },
+    "files": {
+      "type": "application",
+      "root": "apps/files",
+      "entryFile": "main",
+      "sourceRoot": "apps/files/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/files/tsconfig.app.json"
+      }
+    },
+    "reactions": {
+      "type": "application",
+      "root": "apps/reactions",
+      "entryFile": "main",
+      "sourceRoot": "apps/reactions/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/reactions/tsconfig.app.json"
+      }
+    },
+    "weather": {
+      "type": "application",
+      "root": "apps/weather",
+      "entryFile": "main",
+      "sourceRoot": "apps/weather/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/weather/tsconfig.app.json"
+      }
+    },
+    "posts": {
+      "type": "application",
+      "root": "apps/posts",
+      "entryFile": "main",
+      "sourceRoot": "apps/posts/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/posts/tsconfig.app.json"
       }
     }
   }
