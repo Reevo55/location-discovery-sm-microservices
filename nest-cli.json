@@ -3,20 +3,12 @@
   "sourceRoot": "apps/reels/src",
   "monorepo": true,
   "root": "apps/reels",
+  "entryFile": "/src/main",
   "compilerOptions": {
     "webpack": true,
     "tsConfigPath": "apps/reels/tsconfig.app.json"
   },
   "projects": {
-    "auth": {
-      "type": "application",
-      "root": "apps/auth",
-      "entryFile": "main",
-      "sourceRoot": "apps/auth/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/auth/tsconfig.app.json"
-      }
-    },
     "common": {
       "type": "library",
       "root": "libs/common",
@@ -78,6 +70,15 @@
       "sourceRoot": "apps/posts/src",
       "compilerOptions": {
         "tsConfigPath": "apps/posts/tsconfig.app.json"
+      }
+    },
+    "auth": {
+      "type": "application",
+      "root": "apps/auth",
+      "entryFile": "main",
+      "sourceRoot": "apps/auth/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/auth/tsconfig.app.json"
       }
     }
   }

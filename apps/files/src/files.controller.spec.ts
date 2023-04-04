@@ -14,9 +14,4 @@ describe('FilesController', () => {
     filesController = app.get<FilesController>(FilesController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(filesController.getHello()).toBe('Hello World!');
-    });
-  });
 });

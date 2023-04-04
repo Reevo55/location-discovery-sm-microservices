@@ -4,11 +4,9 @@ services:
       context: .
       dockerfile: ./apps/auth/Dockerfile
       target: development
-    command: npm run start:dev auth
+    command: yarn run start:dev auth
     ports:
       - '3001:3001'
-    env_file:
-      - ./apps/auth/.env
     depends_on:
       - mongodb-primary
       - mongodb-secondary
@@ -24,7 +22,7 @@ services:
       dockerfile: ./apps/users/Dockerfile
       target: development
 
-    command: npm run start:dev users
+    command: yarn run start:dev users
     depends_on:
       - mongodb-primary
       - mongodb-secondary
@@ -38,7 +36,7 @@ services:
       context: .
       dockerfile: ./apps/reactions/Dockerfile
       target: development
-    command: npm run start:dev reactions
+    command: yarn run start:dev reactions
     depends_on:
       - mongodb-primary
       - mongodb-secondary
@@ -52,7 +50,7 @@ services:
       context: .
       dockerfile: ./apps/posts/Dockerfile
       target: development
-    command: npm run start:dev posts
+    command: yarn run start:dev posts
     depends_on:
       - mongodb-primary
       - mongodb-secondary
@@ -66,7 +64,7 @@ services:
       context: .
       dockerfile: ./apps/files/Dockerfile
       target: development
-    command: npm run start:dev files
+    command: yarn run start:dev files
     depends_on:
       - mongodb-primary
       - mongodb-secondary
@@ -80,7 +78,7 @@ services:
       context: .
       dockerfile: ./apps/weather/Dockerfile
       target: development
-    command: npm run start:dev weather
+    command: yarn run start:dev weather
     depends_on:
       - mongodb-primary
       - mongodb-secondary
@@ -94,7 +92,7 @@ services:
       context: .
       dockerfile: ./apps/reels/Dockerfile
       target: development
-    command: npm run start:dev reels
+    command: yarn run start:dev reels
     depends_on:
       - mongodb-primary
       - mongodb-secondary

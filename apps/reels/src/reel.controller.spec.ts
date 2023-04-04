@@ -14,9 +14,4 @@ describe('ReelController', () => {
     reelController = app.get<ReelController>(ReelController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(reelController.getHello()).toBe('Hello World!');
-    });
-  });
 });

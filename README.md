@@ -29,17 +29,17 @@
 ## Installation
 
 ```bash
-$ npm install
+$ yarn
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
+$ yarn run start
 
 # watch mode
-$ npm run start:dev
+$ yarn run start:dev
 
 # development single microservice
 $ nest start <microservice-name> --watch
@@ -50,20 +50,20 @@ $ nest start <microservice-name> --watch
 
 ```bash
 # docker compose 
-$ npm run docker:compose
+$ yarn run docker:compose
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+$ yarn run test
 
 # e2e tests
-$ npm run test:e2e
+$ yarn run test:e2e
 
 # test coverage
-$ npm run test:cov
+$ yarn run test:cov
 ```
 
 ## Support

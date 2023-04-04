@@ -1,12 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ReelService } from './reel.service';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('reels')
 @Controller()
 export class ReelController {
   constructor(private readonly reelService: ReelService) {}
 
-  @Get()
-  getHello(): string {
-    return this.reelService.getHello();
+  @ApiOkResponse({ description: 'Get reel' })
+  @Get('reels/:id')
+  getReel(@Param('id') id: string): string {
+    return 'reel ' + id;
   }
 }

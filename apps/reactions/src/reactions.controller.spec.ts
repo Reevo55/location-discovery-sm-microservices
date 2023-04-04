@@ -14,9 +14,4 @@ describe('ReactionsController', () => {
     reactionsController = app.get<ReactionsController>(ReactionsController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(reactionsController.getHello()).toBe('Hello World!');
-    });
-  });
 });
