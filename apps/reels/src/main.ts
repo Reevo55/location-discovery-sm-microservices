@@ -8,8 +8,6 @@ async function bootstrap() {
   const swaggerSetup = new SwaggerFactory(app);
   swaggerSetup.create('Reactions', 'Reactions API', '1.0', 'reactions');
 
-  console.log("co jest kurwa")
-
   await app.listen(3000);
 }
 bootstrap();
