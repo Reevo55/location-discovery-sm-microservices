@@ -8,9 +8,7 @@ services:
     ports:
       - '3001:3001'
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
     volumes:
       - .:/usr/src/app
@@ -24,9 +22,7 @@ services:
 
     command: yarn run start:dev users
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
     ports:
       - '3002:3002'
@@ -38,9 +34,7 @@ services:
       target: development
     command: yarn run start:dev reactions
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
     ports:
       - '3003:3003'
@@ -52,9 +46,7 @@ services:
       target: development
     command: yarn run start:dev posts
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
     ports:
         - '3004:3004'
@@ -66,9 +58,7 @@ services:
       target: development
     command: yarn run start:dev files
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
     ports:
       - '3005:3005'
@@ -80,9 +70,7 @@ services:
       target: development
     command: yarn run start:dev weather
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
     ports:
       - '3006:3006'
@@ -94,9 +82,7 @@ services:
       target: development
     command: yarn run start:dev reels
     depends_on:
-      - mongodb-primary
-      - mongodb-secondary
-      - mongodb-arbiter
+      - mongodb
       - rabbitmq
     ports:
       - '3000:3000'
@@ -105,39 +91,20 @@ services:
     image: rabbitmq
     ports:
       - '5672:5672'
-  mongodb-primary:
-    image: docker.io/bitnami/mongodb:5.0
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=localhost
-      - MONGODB_REPLICA_SET_MODE=primary
-      - MONGODB_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
-    volumes:
-      - 'mongodb_master_data:/bitnami/mongodb'
+
+  mongodb:
+    container_name: mongodb
+    image: mongo:5.0.6
     ports:
-      - '27017:27017'
-
-  mongodb-secondary:
-    image: docker.io/bitnami/mongodb:5.0
-    depends_on:
-      - mongodb-primary
+      - 27018:27017
+    volumes:
+      - ./db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    restart: always
     environment:
-      - MONGODB_ADVERTISED_HOSTNAME=localhost
-      - MONGODB_REPLICA_SET_MODE=secondary
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: password123
+        MONGO_INITDB_DATABASE: isproject
 
-  mongodb-arbiter:
-    image: docker.io/bitnami/mongodb:5.0
-    depends_on:
-      - mongodb-primary
-    environment:
-      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
-      - MONGODB_REPLICA_SET_MODE=arbiter
-      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
-      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
-      - MONGODB_REPLICA_SET_KEY=replicasetkey123
 
 volumes:
   mongodb_master_data:
