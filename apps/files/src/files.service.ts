@@ -10,8 +10,6 @@ export class FilesService {
   async getSignedUrl(
     contentType: string,
   ): Promise<{ url: string; key: string }> {
-    console.log(this.configService.get('AWS_PUBLIC_BUCKET_NAME'));
-
     if (!contentType) {
       throw new Error('No content type');
     }
