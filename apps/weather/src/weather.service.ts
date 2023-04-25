@@ -15,8 +15,10 @@ export class WeatherService {
     const appid = this.configService.get('WEATHER_API_ID');
     const endpoint =
       endpointBase +
+      'weather?' +
       `lat=${latitude}&lon=${longitude}&units=${units}&appid=${appid}`;
 
+    console.log(endpoint);
     return this.httpService
       .get(endpoint)
       .pipe(
@@ -27,6 +29,29 @@ export class WeatherService {
             humidity: res.data.main.humidity,
             icon: res.data.weather[0].icon,
           });
+        }),
+      )
+      .pipe(
+        catchError(() => {
+          throw new ForbiddenException('Open Weather API not available');
+        }),
+      );
+  }
+
+  async getForecastWeather(latitude: string, longitude: string, units: string) {
+    const endpointBase = this.configService.get('WEATHER_API_ENDPOINT');
+    const appid = this.configService.get('WEATHER_API_ID');
+    const endpoint =
+      endpointBase +
+      'forecast?' +
+      `lat=${latitude}&lon=${longitude}&units=${units}&appid=${appid}`;
+
+    console.log(endpoint);
+    return this.httpService
+      .get(endpoint)
+      .pipe(
+        map((res) => {
+          return res.data;
         }),
       )
       .pipe(

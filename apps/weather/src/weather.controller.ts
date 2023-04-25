@@ -21,19 +21,13 @@ export class WeatherController {
 
   @ApiOkResponse({ description: 'Get forecast weather' })
   @Get('forecast')
-  getForecastWeather(): string {
-    return 'forecast weather';
-  }
-
-  @ApiOkResponse({ description: 'Get weather alerts' })
-  @Get('alerts')
-  getWeatherAlerts(): string {
-    return 'weather alerts';
-  }
-
-  @ApiOkResponse({ description: 'Get weather history' })
-  @Get('history')
-  getWeatherHistory(): string {
-    return 'weather history';
+  getForecastWeather(
+    @Body() body: { latitude: string; longitude: string; units: string },
+  ) {
+    return this.weatherService.getForecastWeather(
+      body.latitude,
+      body.longitude,
+      body.units,
+    );
   }
 }
