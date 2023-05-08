@@ -1,45 +1,44 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post as PostMapping,
+  Put,
+  Delete,
+  Body,
+  Param,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from './users.schema';
 
-@ApiTags('users')
-@Controller()
+@Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly userService: UsersService) {}
 
-  @ApiOkResponse({ description: 'Get users' })
-  @Get('users')
-  getUsers(): string {
-    return 'users';
+  @PostMapping()
+  async create(@Body() user: User): Promise<User> {
+    return this.userService.create(user);
   }
 
-  @ApiOkResponse({ description: 'Get user' })
-  @Get('users/:id')
-  getUser(@Param('id') id: string): string {
-    return 'user ' + id;
+  @Get()
+  async findAll(): Promise<User[]> {
+    return this.userService.findAll();
   }
 
-  @ApiOkResponse({ description: 'Create user' })
-  @Post('users')
-  createUser(): string {
-    return 'create user';
+  @Get(':userId')
+  async findOne(@Param('userId') userId: string): Promise<User> {
+    return this.userService.findOne(userId);
   }
 
-  @ApiOkResponse({ description: 'Update user' })
-  @Put('users/:id')
-  updateUser(@Param('id') id: string): string {
-    return 'update user ' + id;
+  @Put(':userId')
+  async update(
+    @Param('userId') userId: string,
+    @Body() user: Partial<User>,
+  ): Promise<User> {
+    return this.userService.update(userId, user);
   }
 
-  @ApiOkResponse({ description: 'Delete user' })
-  @Delete('users/:id')
-  deleteUser(@Param('id') id: string): string {
-    return 'delete user ' + id;
-  }
-
-  @ApiOkResponse({ description: 'Get user posts' })
-  @Get('users/:id/posts')
-  getUserPosts(@Param('id') id: string): string {
-    return 'user posts ' + id;
+  @Delete(':userId')
+  async delete(@Param('userId') userId: string): Promise<User> {
+    return this.userService.delete(userId);
   }
 }
