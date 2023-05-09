@@ -17,7 +17,7 @@ export class Post {
   @Prop()
   content: string;
 
-  @Prop({ required: true })
+  @Prop({ type: Object, required: true })
   location: {
     name: string;
     latitude: number;
