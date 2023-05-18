@@ -6,7 +6,7 @@ services:
       target: development
     command: yarn run start:dev auth
     ports:
-      - '3001:3001'
+      - '3001:3000'
     depends_on:
       - mongodb
       - rabbitmq
@@ -25,7 +25,7 @@ services:
       - mongodb
       - rabbitmq
     ports:
-      - '3002:3002'
+      - '3002:3000'
 
   reactions:
     build:
@@ -37,7 +37,7 @@ services:
       - mongodb
       - rabbitmq
     ports:
-      - '3003:3003'
+      - '3003:3000'
 
   posts:
     build:
@@ -49,7 +49,7 @@ services:
       - mongodb
       - rabbitmq
     ports:
-        - '3004:3004'
+        - '3004:3000'
 
   files:
     build:
@@ -61,7 +61,7 @@ services:
       - mongodb
       - rabbitmq
     ports:
-      - '3005:3005'
+      - '3005:3000'
 
   weather:
     build:
@@ -73,7 +73,7 @@ services:
       - mongodb
       - rabbitmq
     ports:
-      - '3006:3006'
+      - '3006:3000'
 
   reels:
     build:
