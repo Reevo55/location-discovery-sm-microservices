@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get } from '@nestjs/common';
 import { WeatherService } from './weather.service';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
@@ -9,25 +9,25 @@ export class WeatherController {
 
   @ApiOkResponse({ description: 'Get current weather' })
   @Get('current')
-  getCurrentWeather(): string {
-    return 'current weather';
+  getCurrentWeather(
+    @Body() body: { latitude: string; longitude: string; units: string },
+  ) {
+    return this.weatherService.getCurrentWeather(
+      body.latitude,
+      body.longitude,
+      body.units,
+    );
   }
 
   @ApiOkResponse({ description: 'Get forecast weather' })
   @Get('forecast')
-  getForecastWeather(): string {
-    return 'forecast weather';
-  }
-
-  @ApiOkResponse({ description: 'Get weather alerts' })
-  @Get('alerts')
-  getWeatherAlerts(): string {
-    return 'weather alerts';
-  }
-
-  @ApiOkResponse({ description: 'Get weather history' })
-  @Get('history')
-  getWeatherHistory(): string {
-    return 'weather history';
+  getForecastWeather(
+    @Body() body: { latitude: string; longitude: string; units: string },
+  ) {
+    return this.weatherService.getForecastWeather(
+      body.latitude,
+      body.longitude,
+      body.units,
+    );
   }
 }
