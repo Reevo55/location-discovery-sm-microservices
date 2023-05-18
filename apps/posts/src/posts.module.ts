@@ -4,10 +4,13 @@ import { PostsService } from './posts.service';
 import { DatabaseModule, RmqModule } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Post, PostSchema } from './posts.schema';
 
 @Module({
   imports: [
     DatabaseModule,
+    MongooseModule.forFeature([{ name: Post.name, schema: PostSchema }]),
     RmqModule,
     ConfigModule.forRoot({
       isGlobal: true,

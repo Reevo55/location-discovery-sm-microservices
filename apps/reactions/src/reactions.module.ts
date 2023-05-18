@@ -1,9 +1,28 @@
 import { Module } from '@nestjs/common';
 import { ReactionsController } from './reactions.controller';
 import { ReactionsService } from './reactions.service';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
+import { DatabaseModule } from '@app/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Reaction, ReactionSchema } from './reactions.schema';
 
 @Module({
-  imports: [],
+  imports: [
+    DatabaseModule,
+    MongooseModule.forFeature([
+      { name: Reaction.name, schema: ReactionSchema },
+    ]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        JWT_SECRET: Joi.string().required(),
+        JWT_EXPIRATION: Joi.string().required(),
+        MONGODB_URI: Joi.string().required(),
+      }),
+      envFilePath: './apps/reactions/.env',
+    }),
+  ],
   controllers: [ReactionsController],
   providers: [ReactionsService],
 })

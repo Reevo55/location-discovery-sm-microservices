@@ -1,45 +1,72 @@
-import { Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post as PostMapping,
+  Put,
+  Delete,
+  Body,
+  Param,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { User } from './users.schema';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiNotFoundResponse,
+  ApiBody,
+  ApiParam,
+} from '@nestjs/swagger';
 
 @ApiTags('users')
-@Controller()
+@Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly userService: UsersService) {}
 
-  @ApiOkResponse({ description: 'Get users' })
-  @Get('users')
-  getUsers(): string {
-    return 'users';
+  @PostMapping()
+  @ApiOperation({ summary: 'Create a user' })
+  @ApiCreatedResponse({ description: 'The user has been created.' })
+  @ApiBody({ type: User })
+  async create(@Body() user: User): Promise<User> {
+    return this.userService.create(user);
   }
 
-  @ApiOkResponse({ description: 'Get user' })
-  @Get('users/:id')
-  getUser(@Param('id') id: string): string {
-    return 'user ' + id;
+  @Get()
+  @ApiOperation({ summary: 'Get all users' })
+  @ApiOkResponse({ description: 'Users retrieved successfully.' })
+  async findAll(): Promise<User[]> {
+    return this.userService.findAll();
   }
 
-  @ApiOkResponse({ description: 'Create user' })
-  @Post('users')
-  createUser(): string {
-    return 'create user';
+  @Get(':userId')
+  @ApiOperation({ summary: 'Get user by ID' })
+  @ApiOkResponse({ description: 'User retrieved successfully.' })
+  @ApiNotFoundResponse({ description: 'User not found.' })
+  @ApiParam({ name: 'userId', type: String })
+  async findOne(@Param('userId') userId: string): Promise<User> {
+    return this.userService.findOne(userId);
   }
 
-  @ApiOkResponse({ description: 'Update user' })
-  @Put('users/:id')
-  updateUser(@Param('id') id: string): string {
-    return 'update user ' + id;
+  @Put(':userId')
+  @ApiOperation({ summary: 'Update user by ID' })
+  @ApiOkResponse({ description: 'User updated successfully.' })
+  @ApiNotFoundResponse({ description: 'User not found.' })
+  @ApiParam({ name: 'userId', type: String })
+  @ApiBody({ type: User })
+  async update(
+    @Param('userId') userId: string,
+    @Body() user: Partial<User>,
+  ): Promise<User> {
+    return this.userService.update(userId, user);
   }
 
-  @ApiOkResponse({ description: 'Delete user' })
-  @Delete('users/:id')
-  deleteUser(@Param('id') id: string): string {
-    return 'delete user ' + id;
-  }
-
-  @ApiOkResponse({ description: 'Get user posts' })
-  @Get('users/:id/posts')
-  getUserPosts(@Param('id') id: string): string {
-    return 'user posts ' + id;
+  @Delete(':userId')
+  @ApiOperation({ summary: 'Delete user by ID' })
+  @ApiOkResponse({ description: 'User deleted successfully.' })
+  @ApiNotFoundResponse({ description: 'User not found.' })
+  @ApiParam({ name: 'userId', type: String })
+  async delete(@Param('userId') userId: string): Promise<User> {
+    return this.userService.delete(userId);
   }
 }
