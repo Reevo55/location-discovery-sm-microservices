@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Post, PostSchema } from './posts.schema';
+import PostEventsHandler from './posts.event.handler';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { Post, PostSchema } from './posts.schema';
       envFilePath: './apps/posts/.env',
     }),
   ],
-  controllers: [PostsController],
+  controllers: [PostsController, PostEventsHandler],
   providers: [PostsService],
 })
 export class PostsModule {}

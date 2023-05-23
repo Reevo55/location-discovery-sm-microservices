@@ -27,4 +27,16 @@ export class PostsService {
   async delete(postId: string): Promise<Post> {
     return this.postModel.findByIdAndDelete(postId).exec();
   }
+
+  async incrementLikes(postId: string): Promise<Post> {
+    return this.postModel
+      .findByIdAndUpdate(postId, { $inc: { likes: 1 } }, { new: true })
+      .exec();
+  }
+
+  async decrementLikes(postId: string) {
+    return this.postModel
+      .findByIdAndUpdate(postId, { $inc: { likes: -1 } }, { new: true })
+      .exec();
+  }
 }
