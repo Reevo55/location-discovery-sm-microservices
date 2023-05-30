@@ -10,7 +10,7 @@ import { Reaction, ReactionSchema } from './reactions.schema';
 @Module({
   imports: [
     DatabaseModule,
-    RmqModule.register({ name: 'POST_SERVICE' }),
+    RmqModule.register({ name: 'POST' }),
     MongooseModule.forFeature([
       { name: Reaction.name, schema: ReactionSchema },
     ]),

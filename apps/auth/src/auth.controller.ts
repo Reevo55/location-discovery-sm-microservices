@@ -1,10 +1,13 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { GoogleGuard } from './guards/google.guard';
 
 @ApiTags('auth')
 @Controller()
 export class AuthController {
+  constructor(private readonly authService: AuthService) {}
+
   @ApiOkResponse({ description: 'Login' })
   @Post('login')
   login() {
@@ -51,5 +54,19 @@ export class AuthController {
   @Post('resend-verification-email')
   resendVerificationEmail() {
     return 'resend verification email';
+  }
+
+  @Get('/google')
+  @UseGuards(GoogleGuard)
+  @ApiResponse({ status: 200, type: String })
+  googleAuth() {
+    return;
+  }
+
+  @Get('google/redirect')
+  @UseGuards(GoogleGuard)
+  @ApiResponse({ status: 200, type: String })
+  googleAuthRedirect(@Req() request) {
+    return this.authService.googleRegister(request);
   }
 }

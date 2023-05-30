@@ -19,11 +19,32 @@ import {
 
 import { PostsService } from './posts.service';
 import { Post } from './posts.schema';
+import { RmqService } from '@app/common';
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+} from '@nestjs/microservices';
 
 @ApiTags('posts')
 @Controller('posts')
 export class PostsController {
-  constructor(private readonly postService: PostsService) {}
+  constructor(
+    private readonly postService: PostsService,
+    private readonly rmqService: RmqService,
+  ) {}
+
+  @MessagePattern('post.reaction.created')
+  async handleReactionCreated(
+    @Payload() data: any,
+    @Ctx() context: RmqContext,
+  ) {
+    console.log('post.reaction.created');
+    console.log(data);
+    await this.postService.incrementLikes(data.postId);
+    this.rmqService.ack(context);
+  }
 
   @PostMapping()
   @ApiOperation({ summary: 'Create a post' })

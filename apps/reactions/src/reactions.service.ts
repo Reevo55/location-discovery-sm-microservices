@@ -1,5 +1,5 @@
 // reaction.service.ts
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Reaction, ReactionDocument } from './reactions.schema';
@@ -9,7 +9,7 @@ import { ClientProxy } from '@nestjs/microservices';
 export class ReactionsService {
   constructor(
     @InjectModel(Reaction.name) private reactionModel: Model<ReactionDocument>,
-    @Inject('POST_SERVICE') private postService: ClientProxy,
+    @Inject('POST') private postService: ClientProxy,
   ) {}
 
   async create(reaction: Reaction): Promise<Reaction> {
@@ -26,6 +26,7 @@ export class ReactionsService {
   async delete(reactionId: string): Promise<Reaction> {
     const reaction = await this.reactionModel.findById(reactionId).exec();
     this.postService.emit('post.reaction.deleted', reaction.postId);
+    console.log('co tam');
     console.log('post.reaction.delete', reaction.postId);
 
     return this.reactionModel.findByIdAndDelete(reactionId).exec();
