@@ -13,6 +13,4 @@ describe('UsersController', () => {
 
     usersController = app.get<UsersController>(UsersController);
   });
-
-
 });

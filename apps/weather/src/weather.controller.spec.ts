@@ -13,6 +13,4 @@ describe('WeatherController', () => {
 
     weatherController = app.get<WeatherController>(WeatherController);
   });
-
-
 });

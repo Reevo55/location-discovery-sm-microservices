@@ -26,7 +26,6 @@ export class ReactionsService {
   async delete(reactionId: string): Promise<Reaction> {
     const reaction = await this.reactionModel.findById(reactionId).exec();
     this.postService.emit('post.reaction.deleted', reaction.postId);
-    console.log('co tam');
     console.log('post.reaction.delete', reaction.postId);
 
     return this.reactionModel.findByIdAndDelete(reactionId).exec();

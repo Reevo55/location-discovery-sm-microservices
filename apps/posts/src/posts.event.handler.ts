@@ -1,5 +1,10 @@
 import { RmqService } from '@app/common';
-import { Ctx,  MessagePattern, Payload, RmqContext } from "@nestjs/microservices";
+import {
+  Ctx,
+  MessagePattern,
+  Payload,
+  RmqContext,
+} from '@nestjs/microservices';
 import { PostsService } from './posts.service';
 import { Controller } from '@nestjs/common';
 
