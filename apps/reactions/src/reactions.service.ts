@@ -15,12 +15,19 @@ export class ReactionsService {
   async create(reaction: Reaction): Promise<Reaction> {
     const newReaction = new this.reactionModel(reaction);
     this.postService.emit('post.reaction.created', newReaction);
-    console.log('post.reaction.created', newReaction);
     return newReaction.save();
   }
 
   async findByPostId(postId: string): Promise<Reaction[]> {
-    return this.reactionModel.find({ postId }).exec();
+    return this.reactionModel.find({ postId: postId }).exec();
+  }
+
+  async findTypeByUserId(userId: string, type: string): Promise<Reaction[]> {
+    return this.reactionModel.find({ userId: userId, type: type }).exec();
+  }
+
+  async findAll(): Promise<Reaction[]> {
+    return this.reactionModel.find().exec();
   }
 
   async delete(reactionId: string): Promise<Reaction> {

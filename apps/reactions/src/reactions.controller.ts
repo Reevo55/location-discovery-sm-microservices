@@ -31,6 +31,32 @@ export class ReactionsController {
     return this.reactionService.findByPostId(postId);
   }
 
+  @Get('likes/:userId')
+  @ApiOperation({ summary: 'Get like reactions by user ID' })
+  @ApiOkResponse({ description: 'Reactions retrieved successfully.' })
+  @ApiNotFoundResponse({ description: 'No reactions found for this post.' })
+  @ApiParam({ name: 'userId', type: String })
+  async findLikesByUserId(@Param('userId') userId: string): Promise<Reaction[]> {
+    return this.reactionService.findTypeByUserId(userId, 'like');
+  }
+
+  @Get('saves/:userId')
+  @ApiOperation({ summary: 'Get like reactions by user ID' })
+  @ApiOkResponse({ description: 'Reactions retrieved successfully.' })
+  @ApiNotFoundResponse({ description: 'No reactions found for this post.' })
+  @ApiParam({ name: 'userId', type: String })
+  async findSavesByUserId(@Param('userId') userId: string): Promise<Reaction[]> {
+    return this.reactionService.findTypeByUserId(userId, 'save');
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Get all posts' })
+  @ApiOkResponse({ description: 'Reactions retrieved successfully.' })
+  @ApiNotFoundResponse({ description: 'No reactions found for this post.' })
+  async findAll(): Promise<Reaction[]> {
+    return this.reactionService.findAll();
+  }
+
   @Delete(':reactionId')
   @ApiOperation({ summary: 'Delete a reaction by ID' })
   @ApiOkResponse({ description: 'Reaction deleted successfully.' })
