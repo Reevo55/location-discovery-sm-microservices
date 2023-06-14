@@ -12,7 +12,7 @@ export class Reaction {
   @Prop({ required: true })
   postId: string;
 
-  @Prop({ required: true, enum: ['like', 'dislike'] })
+  @Prop({ required: true, enum: ['like', 'save'] })
   type: string;
 
   @Prop({ default: Date.now })
