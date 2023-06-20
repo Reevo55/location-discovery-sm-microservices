@@ -29,9 +29,6 @@ export class Post {
 
   @Prop({ default: 0 })
   likes: number;
-
-  @Prop({ default: 0 })
-  comments: number;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);

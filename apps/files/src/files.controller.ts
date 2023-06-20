@@ -13,7 +13,7 @@ export class FilesController {
   @ApiTags('files')
   @Get()
   async getSignedUrl(@Query('contentType') contentType: string) {
-    return await this.fileService.getSignedUrl(contentType || 'image/jpeg');
+    return await this.fileService.getSignedUrl(contentType || 'video/mov');
   }
 
   @ApiOkResponse()
